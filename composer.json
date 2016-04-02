@@ -1,0 +1,22 @@
+{
+    "name": "typicms/roles",
+    "description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel De Backer",
+            "email": "sdebacker@gmail.com"
+        }
+    ],
+    "require": {
+        "typicms/core": "~2.7.0",
+        "spatie/laravel-permission": "~1.3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "TypiCMS\\Modules\\Roles\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
