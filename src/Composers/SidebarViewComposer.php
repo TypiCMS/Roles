@@ -11,7 +11,7 @@ class SidebarViewComposer extends BaseSidebarViewComposer
 {
     public function compose(View $view)
     {
-        $view->sidebar->role(trans('global.menus.users'), function (SidebarRole $role) {
+        $view->sidebar->group(trans('global.menus.users'), function (SidebarRole $role) {
             $role->addItem(trans('roles::global.name'), function (SidebarItem $item) {
                 $item->icon = config('typicms.roles.sidebar.icon', 'icon fa fa-fw fa-users');
                 $item->weight = config('typicms.roles.sidebar.weight');

@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->role(['namespace' => $this->namespace], function (Router $router) {
+        $router->group(['namespace' => $this->namespace], function (Router $router) {
 
             /*
              * Admin routes
