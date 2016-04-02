@@ -30,18 +30,18 @@ class RouteServiceProvider extends ServiceProvider
             /*
              * Admin routes
              */
-            $router->get('admin/roles', ['as' => 'admin.roles.index', 'uses' => 'AdminController@index']);
-            $router->get('admin/roles/create', ['as' => 'admin.roles.create', 'uses' => 'AdminController@create']);
-            $router->get('admin/roles/{role}/edit', ['as' => 'admin.roles.edit', 'uses' => 'AdminController@edit']);
-            $router->post('admin/roles', ['as' => 'admin.roles.store', 'uses' => 'AdminController@store']);
-            $router->put('admin/roles/{role}', ['as' => 'admin.roles.update', 'uses' => 'AdminController@update']);
+            $router->get('admin/roles', 'AdminController@index')->name('admin::index-roles');
+            $router->get('admin/roles/create', 'AdminController@create')->name('admin::create-roles');
+            $router->get('admin/roles/{role}/edit', 'AdminController@edit')->name('admin::edit-roles');
+            $router->post('admin/roles', 'AdminController@store')->name('admin::store-roles');
+            $router->put('admin/roles/{role}', 'AdminController@update')->name('admin::update-roles');
 
             /*
              * API routes
              */
-            $router->get('api/roles', ['as' => 'api.roles.index', 'uses' => 'ApiController@index']);
-            $router->put('api/roles/{role}', ['as' => 'api.roles.update', 'uses' => 'ApiController@update']);
-            $router->delete('api/roles/{role}', ['as' => 'api.roles.destroy', 'uses' => 'ApiController@destroy']);
+            $router->get('api/roles', 'ApiController@index')->name('api::index-roles');
+            $router->put('api/roles/{role}', 'ApiController@update')->name('api::update-roles');
+            $router->delete('api/roles/{role}', 'ApiController@destroy')->name('api::destroy-roles');
         });
     }
 }

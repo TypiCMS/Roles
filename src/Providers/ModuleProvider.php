@@ -31,7 +31,7 @@ class ModuleProvider extends ServiceProvider
 
         AliasLoader::getInstance()->alias(
             'Roles',
-            'TypiCMS\Modules\Roles\Facades\Facade'
+            \TypiCMS\Modules\Roles\Facades\Facade::class
         );
     }
 
@@ -42,14 +42,15 @@ class ModuleProvider extends ServiceProvider
         /*
          * Register route service provider
          */
-        $app->register('TypiCMS\Modules\Roles\Providers\RouteServiceProvider');
+        $app->register(\TypiCMS\Modules\Roles\Providers\RouteServiceProvider::class);
+        $app->register(\Spatie\Permission\PermissionServiceProvider::class);
 
         /*
          * Sidebar view composer
          */
-        $app->view->composer('core::admin._sidebar', 'TypiCMS\Modules\Roles\Composers\SidebarViewComposer');
+        $app->view->composer('core::admin._sidebar', \TypiCMS\Modules\Roles\Composers\SidebarViewComposer::class);
 
-        $app->bind('TypiCMS\Modules\Roles\Repositories\RoleInterface', function (Application $app) {
+        $app->bind(\TypiCMS\Modules\Roles\Repositories\RoleInterface::class, function (Application $app) {
             return new EloquentRole(new Role());
         });
     }
