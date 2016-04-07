@@ -24,4 +24,52 @@ class EloquentRole extends RepositoriesAbstract implements RoleInterface
     {
         return $this->make($with)->order()->get();
     }
+
+    /**
+     * Create a new model.
+     *
+     * @param array $data
+     *
+     * @return mixed Model or false on error during save
+     */
+    public function create(array $data)
+    {
+        $roleData = array_except($data, ['exit', 'permissions']);
+
+        $model = $this->model->fill($roleData);
+
+        if ($model->save()) {
+            $permissions = isset($data['permissions']) ? $data['permissions'] : [];
+            $model->syncPermissions($permissions);
+
+            return $model;
+        }
+
+        return false;
+    }
+
+    /**
+     * Update an existing model.
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function update(array $data)
+    {
+        $role = $this->model->find($data['id']);
+
+        $roleData = array_except($data, ['exit', 'permissions']);
+
+        $role->fill($roleData);
+
+        $permissions = isset($data['permissions']) ? $data['permissions'] : [];
+        $role->syncPermissions($permissions);
+
+        if ($role->save()) {
+            return true;
+        }
+
+        return false;
+    }
 }
