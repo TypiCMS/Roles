@@ -1,7 +1,3 @@
-@section('js')
-    <script src="{{ asset('js/admin/checkboxes-permissions.js') }}"></script>
-@endsection
-
 {!! BootForm::hidden('id') !!}
 
 @include('core::admin._buttons-form')
