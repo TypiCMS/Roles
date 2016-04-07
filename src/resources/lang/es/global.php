@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name'              => 'Grupos',
-    'roles'            => 'grupo|grupos',
-    'New'               => 'Nuevo grupo',
-    'Edit'              => 'Editar grupo',
-    'Back'              => 'Volver a los grupos',
-    'Role permissions' => 'Permisos de grupo',
+    'name'             => 'Roles',
+    'roles'            => 'rol|roles',
+    'New'              => 'Nuevo rol',
+    'Edit'             => 'Editar rol',
+    'Back'             => 'Volver a los roles',
+    'Role permissions' => 'Permisos de rol',
 ];

@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name'              => 'Rolees',
-    'roles'            => 'rolee|rolees',
-    'New'               => 'Nouveau rolee',
-    'Edit'              => 'Modifier le rolee',
-    'Back'              => 'Retour à la liste des rolees',
-    'Role permissions' => 'Permissions du rolee',
+    'name'             => 'Rôles',
+    'roles'            => 'rôle|rôles',
+    'New'              => 'Nouveau rôle',
+    'Edit'             => 'Modifier le rôle',
+    'Back'             => 'Retour à la liste des rôles',
+    'Role permissions' => 'Permissions du rôle',
 ];
