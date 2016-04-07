@@ -7,11 +7,9 @@ use Spatie\Permission\Contracts\Permission as PermissionContract;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
 use TypiCMS\Modules\Core\Models\Base;
-use TypiCMS\Modules\History\Traits\Historable;
 
 class Permission extends Base implements PermissionContract
 {
-    use Historable;
     use RefreshesPermissionCache;
 
     public $guarded = ['id'];
