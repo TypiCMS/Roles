@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Roles\Models;
 
 use Laracasts\Presenter\PresentableTrait;
+use Spatie\Permission\Contracts\Permission;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Traits\HasPermissions;
@@ -83,5 +84,21 @@ class Role extends Base implements RoleContract
         }
 
         return $role;
+    }
+
+    /**
+     * Sync permissions.
+     *
+     * @param array $permissions
+     *
+     * @return null
+     */
+    public function syncPermissions($permissions)
+    {
+        $permissionIds = [];
+        foreach ($permissions as $name) {
+            $permissionIds[] = app(Permission::class)->firstOrCreate(['name' => $name])->id;
+        }
+        $this->permissions()->sync($permissionIds);
     }
 }
