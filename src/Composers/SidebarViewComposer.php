@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Roles\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Sidebar\SidebarGroup;
 use Maatwebsite\Sidebar\SidebarItem;
 
@@ -17,7 +18,7 @@ class SidebarViewComposer
                 $item->route('admin::index-roles');
                 $item->append('admin::create-roles');
                 $item->authorize(
-                    auth()->user()->can('index-roles')
+                    Gate::allows('index-roles')
                 );
             });
         });
