@@ -16,7 +16,7 @@ class SidebarViewComposer
                 $item->icon = config('typicms.roles.sidebar.icon', 'icon fa fa-fw fa-users');
                 $item->weight = config('typicms.roles.sidebar.weight');
                 $item->route('admin::index-roles');
-                $item->append('admin::create-roles');
+                $item->append('admin::create-role');
                 $item->authorize(
                     Gate::allows('index-roles')
                 );
