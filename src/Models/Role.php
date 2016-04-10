@@ -3,7 +3,7 @@
 namespace TypiCMS\Modules\Roles\Models;
 
 use Laracasts\Presenter\PresentableTrait;
-use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Contracts\Permission as PermissionContract;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Traits\HasPermissions;
@@ -97,7 +97,7 @@ class Role extends Base implements RoleContract
     {
         $permissionIds = [];
         foreach ($permissions as $name) {
-            $permissionIds[] = app(Permission::class)->firstOrCreate(['name' => $name])->id;
+            $permissionIds[] = app(PermissionContract::class)->firstOrCreate(['name' => $name])->id;
         }
         $this->permissions()->sync($permissionIds);
     }
