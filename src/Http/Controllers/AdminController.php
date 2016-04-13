@@ -48,7 +48,7 @@ class AdminController extends BaseAdminController
      */
     public function edit(Role $role, $child = null)
     {
-        $permissions = $role->permissions->pluck('name')->all();
+        $permissions = $role->permissions()->pluck('name')->all();
 
         return view('roles::admin.edit')
             ->with([
