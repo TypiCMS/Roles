@@ -1,18 +1,18 @@
 @extends('core::admin.master')
 
-@section('title', trans('roles::global.name'))
+@section('title', __('Roles'))
 
-@section('main')
+@section('content')
 
-<div ng-app="typicms" ng-cloak ng-controller="ListController">
+<div ng-cloak ng-controller="ListController">
 
     @include('core::admin._button-create', ['module' => 'roles'])
 
-    <h1>
-        <span>@{{ models.length }} @choice('roles::global.roles', 2)</span>
-    </h1>
+    <h1>@lang('Roles')</h1>
 
     <div class="btn-toolbar">
+        @include('core::admin._button-select')
+        @include('core::admin._button-actions', ['only' => ['delete']])
     </div>
 
     <div class="table-responsive">
@@ -22,19 +22,21 @@
                 <tr>
                     <th class="delete"></th>
                     <th class="edit"></th>
-                    <th st-sort="name" class="name st-sort" st-sort-default="true">Name</th>
+                    <th st-sort="name" class="name st-sort" st-sort-default="true">{{ __('Name') }}</th>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <td>
-                        <input st-search="name" class="form-control input-sm" placeholder="@lang('global.Search')…" type="text">
+                        <input st-search="name" class="form-control input-sm" placeholder="@lang('Filter')…" type="text">
                     </td>
                 </tr>
             </thead>
 
             <tbody>
                 <tr ng-repeat="model in displayedModels">
-                    <td typi-btn-delete action="delete(model, model.name)"></td>
+                    <td>
+                        <input type="checkbox" checklist-model="checked.models" checklist-value="model">
+                    </td>
                     <td>
                         @include('core::admin._button-edit', ['module' => 'roles'])
                     </td>

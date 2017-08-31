@@ -4,6 +4,7 @@ namespace TypiCMS\Modules\Roles\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -19,29 +20,24 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
-     * @return void
+     * @return null
      */
-    public function map(Router $router)
+    public function map()
     {
-        $router->group(['namespace' => $this->namespace], function (Router $router) {
+        Route::group(['namespace' => $this->namespace], function (Router $router) {
 
             /*
              * Admin routes
              */
-            $router->get('admin/roles', 'AdminController@index')->name('admin::index-roles');
-            $router->get('admin/roles/create', 'AdminController@create')->name('admin::create-role');
-            $router->get('admin/roles/{role}/edit', 'AdminController@edit')->name('admin::edit-role');
-            $router->post('admin/roles', 'AdminController@store')->name('admin::store-role');
-            $router->put('admin/roles/{role}', 'AdminController@update')->name('admin::update-role');
-
-            /*
-             * API routes
-             */
-            $router->get('api/roles', 'ApiController@index')->name('api::index-roles');
-            $router->put('api/roles/{role}', 'ApiController@update')->name('api::update-role');
-            $router->delete('api/roles/{role}', 'ApiController@destroy')->name('api::destroy-role');
+            $router->group(['middleware' => 'admin', 'prefix' => 'admin'], function (Router $router) {
+                $router->get('roles', 'AdminController@index')->name('admin::index-roles')->middleware('can:see-all-roles');
+                $router->get('roles/create', 'AdminController@create')->name('admin::create-role')->middleware('can:create-role');
+                $router->get('roles/{role}/edit', 'AdminController@edit')->name('admin::edit-role')->middleware('can:update-role');
+                $router->post('roles', 'AdminController@store')->name('admin::store-role')->middleware('can:create-role');
+                $router->put('roles/{role}', 'AdminController@update')->name('admin::update-role')->middleware('can:update-role');
+                $router->patch('roles/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-role-ajax')->middleware('can:update-role');
+                $router->delete('roles/{ids}', 'AdminController@destroyMultiple')->name('admin::destroy-role')->middleware('can:delete-role');
+            });
         });
     }
 }

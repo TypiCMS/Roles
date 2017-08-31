@@ -1,14 +1,15 @@
 {!! BootForm::hidden('id') !!}
 
-@include('core::admin._buttons-form')
+@component('core::admin._buttons-form', ['model' => $model])
+@endcomponent
 
 <div class="row">
 
     <div class="col-sm-6">
-        {!! BootForm::text(trans('validation.attributes.name'), 'name') !!}
+        {!! BootForm::text(__('Name'), 'name')->required() !!}
     </div>
 
 </div>
 
-<label>@lang('roles::global.Role permissions')</label>
+<label>@lang('Role permissions')</label>
 @include('core::admin._permissions-form')

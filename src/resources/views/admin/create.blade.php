@@ -1,12 +1,12 @@
 @extends('core::admin.master')
 
-@section('title', trans('roles::global.New'))
+@section('title', __('New role'))
 
-@section('main')
+@section('content')
 
     @include('core::admin._button-back', ['module' => 'roles'])
     <h1>
-        @lang('roles::global.New')
+        @lang('New role')
     </h1>
 
     {!! BootForm::open()->action(route('admin::index-roles'))->multipart()->role('form') !!}
