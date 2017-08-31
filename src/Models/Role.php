@@ -114,22 +114,6 @@ class Role extends Base implements RoleContract
     }
 
     /**
-     * Determine if the user may perform the given permission.
-     *
-     * @param string|Permission $permission
-     *
-     * @return bool
-     */
-    public function hasPermissionTo($permission)
-    {
-        if (is_string($permission)) {
-            $permission = app(Permission::class)->findByName($permission);
-        }
-
-        return $this->permissions->contains('id', $permission->id);
-    }
-
-    /**
      * Sync permissions.
      *
      * @param array $permissions
