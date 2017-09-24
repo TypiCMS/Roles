@@ -44,7 +44,6 @@ class ModuleProvider extends ServiceProvider
          * Register route service provider
          */
         $app->register(\TypiCMS\Modules\Roles\Providers\RouteServiceProvider::class);
-        $app->register(\Spatie\Permission\PermissionServiceProvider::class);
 
         $app->bind('Roles', EloquentRole::class);
     }
