@@ -128,4 +128,38 @@ class Role extends Base implements RoleContract
         }
         $this->permissions()->sync($permissionIds);
     }
+
+    public static function findById(int $id, $guardName = null): RoleContract
+    {
+        $guardName = $guardName ?? Guard::getDefaultName(static::class);
+
+        $role = static::where('id', $id)->where('guard_name', $guardName)->first();
+
+        if (! $role) {
+            throw RoleDoesNotExist::withId($id);
+        }
+
+        return $role;
+    }
+
+    /**
+     * Find or create role by its name (and optionally guardName).
+     *
+     * @param string $name
+     * @param string|null $guardName
+     *
+     * @return \Spatie\Permission\Contracts\Role
+     */
+    public static function findOrCreate(string $name, $guardName = null): RoleContract
+    {
+        $guardName = $guardName ?? Guard::getDefaultName(static::class);
+
+        $role = static::where('name', $name)->where('guard_name', $guardName)->first();
+
+        if (! $role) {
+            return static::query()->create(['name' => $name, 'guard_name' => $guardName]);
+        }
+
+        return $role;
+    }
 }
