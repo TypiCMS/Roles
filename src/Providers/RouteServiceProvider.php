@@ -35,8 +35,17 @@ class RouteServiceProvider extends ServiceProvider
                 $router->get('roles/{role}/edit', 'AdminController@edit')->name('admin::edit-role')->middleware('can:update-role');
                 $router->post('roles', 'AdminController@store')->name('admin::store-role')->middleware('can:create-role');
                 $router->put('roles/{role}', 'AdminController@update')->name('admin::update-role')->middleware('can:update-role');
-                $router->patch('roles/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-role-ajax')->middleware('can:update-role');
-                $router->delete('roles/{ids}', 'AdminController@destroyMultiple')->name('admin::destroy-role')->middleware('can:delete-role');
+            });
+
+            /*
+             * API routes
+             */
+            $router->middleware('api')->prefix('api')->group(function (Router $router) {
+                $router->middleware('auth:api')->group(function (Router $router) {
+                    $router->get('roles', 'ApiController@index')->name('api::index-roles')->middleware('can:see-all-roles');
+                    $router->patch('roles/{role}', 'ApiController@updatePartial')->name('api::update-role')->middleware('can:update-role');
+                    $router->delete('roles/{role}', 'ApiController@destroy')->name('api::destroy-role')->middleware('can:delete-role');
+                });
             });
         });
     }

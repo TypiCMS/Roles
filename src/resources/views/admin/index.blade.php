@@ -4,54 +4,36 @@
 
 @section('content')
 
-<div ng-cloak ng-controller="ListController">
+<item-list
+    url-base="{{ route('api::index-roles') }}"
+    locale="{{ config('typicms.content_locale') }}"
+    fields="id,name"
+    table="roles"
+    title="roles"
+    :publishable="false"
+    :searchable="['name']"
+    :sorting="['name']">
 
-    @include('core::admin._button-create', ['module' => 'roles'])
+    <template slot="add-button">
+        @include('core::admin._button-create', ['module' => 'roles'])
+    </template>
 
-    <h1>@lang('Roles')</h1>
+    <template slot="buttons">
+        @include('core::admin._lang-switcher-for-list')
+    </template>
 
-    <div class="btn-toolbar">
-        @include('core::admin._button-select')
-        @include('core::admin._button-actions', ['only' => ['delete']])
-    </div>
+    <template slot="columns" slot-scope="{ sortArray }">
+        <item-list-column-header name="checkbox"></item-list-column-header>
+        <item-list-column-header name="edit"></item-list-column-header>
+        <item-list-column-header name="name" sortable :sort-array="sortArray" :label="$t('Name')"></item-list-column-header>
+    </template>
 
-    <div class="table-responsive">
+    <template slot="table-row" slot-scope="{ model, checkedModels, loading }">
+        <td class="checkbox"><item-list-checkbox :model="model" :checked-models-prop="checkedModels" :loading="loading"></item-list-checkbox></td>
+        <td>@include('core::admin._button-edit', ['module' => 'roles'])</td>
+        <td>@{{ model.name }}</td>
+    </template>
 
-        <table st-persist="rolesTable" st-table="displayedModels" st-safe-src="models" st-order st-filter class="table table-main">
-            <thead>
-                <tr>
-                    <th class="delete"></th>
-                    <th class="edit"></th>
-                    <th st-sort="name" class="name st-sort" st-sort-default="true">{{ __('Name') }}</th>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td>
-                        <input st-search="name" class="form-control form-control-sm" placeholder="@lang('Filter')…" type="text">
-                    </td>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="model in displayedModels">
-                    <td>
-                        <input type="checkbox" checklist-model="checked.models" checklist-value="model">
-                    </td>
-                    <td>
-                        @include('core::admin._button-edit', ['module' => 'roles'])
-                    </td>
-                    <td>@{{ model.name }}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" typi-pagination></td>
-                </tr>
-            </tfoot>
-        </table>
-
-    </div>
-
-</div>
+</item-list>
 
 @endsection

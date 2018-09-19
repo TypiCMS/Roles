@@ -21,9 +21,6 @@ class AdminController extends BaseAdminController
      */
     public function index()
     {
-        $models = $this->repository->findAll();
-        app('JavaScript')->put('models', $models);
-
         return view('roles::admin.index');
     }
 
@@ -93,21 +90,5 @@ class AdminController extends BaseAdminController
         $role->forgetCachedPermissions();
 
         return $this->redirect($request, $role);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \TypiCMS\Modules\Roles\Models\Role $role
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Role $role)
-    {
-        $deleted = $this->repository->delete($role);
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
     }
 }
