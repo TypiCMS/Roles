@@ -42,9 +42,9 @@ class RouteServiceProvider extends ServiceProvider
              */
             $router->middleware('api')->prefix('api')->group(function (Router $router) {
                 $router->middleware('auth:api')->group(function (Router $router) {
-                    $router->get('roles', 'ApiController@index')->name('api::index-roles')->middleware('can:see-all-roles');
-                    $router->patch('roles/{role}', 'ApiController@updatePartial')->name('api::update-role')->middleware('can:update-role');
-                    $router->delete('roles/{role}', 'ApiController@destroy')->name('api::destroy-role')->middleware('can:delete-role');
+                    $router->get('roles', 'ApiController@index')->middleware('can:see-all-roles');
+                    $router->patch('roles/{role}', 'ApiController@updatePartial')->middleware('can:update-role');
+                    $router->delete('roles/{role}', 'ApiController@destroy')->middleware('can:delete-role');
                 });
             });
         });
