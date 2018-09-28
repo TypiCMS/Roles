@@ -17,10 +17,10 @@ class ApiController extends BaseApiController
 
     public function index(Request $request)
     {
-        $models = QueryBuilder::for(Role::class)
+        $data = QueryBuilder::for(Role::class)
             ->paginate($request->input('per_page'));
 
-        return $models;
+        return $data;
     }
 
     public function destroy(Role $role)
