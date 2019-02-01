@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Roles\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Roles\Http\Requests\FormRequest;
 use TypiCMS\Modules\Roles\Models\Role;
@@ -61,7 +62,7 @@ class AdminController extends BaseAdminController
     public function store(FormRequest $request)
     {
         $data = $request->all();
-        $roleData = array_except($data, ['exit', 'permissions']);
+        $roleData = Arr::except($data, ['exit', 'permissions']);
         $role = $this->repository->create($roleData);
 
         if ($role) {
@@ -83,7 +84,7 @@ class AdminController extends BaseAdminController
     public function update(Role $role, FormRequest $request)
     {
         $data = $request->all();
-        $roleData = array_except($data, ['exit', 'permissions']);
+        $roleData = Arr::except($data, ['exit', 'permissions']);
         $permissions = isset($data['permissions']) ? $data['permissions'] : [];
         $role->syncPermissions($permissions);
         $this->repository->update($role->id, $roleData);
