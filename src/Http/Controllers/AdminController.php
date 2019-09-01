@@ -6,15 +6,9 @@ use Illuminate\Support\Arr;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Roles\Http\Requests\FormRequest;
 use TypiCMS\Modules\Roles\Models\Role;
-use TypiCMS\Modules\Roles\Repositories\EloquentRole;
 
 class AdminController extends BaseAdminController
 {
-    public function __construct(EloquentRole $role)
-    {
-        parent::__construct($role);
-    }
-
     /**
      * List models.
      *
@@ -32,7 +26,7 @@ class AdminController extends BaseAdminController
      */
     public function create()
     {
-        $model = $this->repository->createModel();
+        $model = new;
         $model->permissions = [];
 
         return view('roles::admin.create')
@@ -63,7 +57,7 @@ class AdminController extends BaseAdminController
     {
         $data = $request->all();
         $roleData = Arr::except($data, ['exit', 'permissions']);
-        $role = $this->repository->create($roleData);
+        $role = ::create($roleData);
 
         if ($role) {
             $permissions = isset($data['permissions']) ? $data['permissions'] : [];
@@ -87,7 +81,7 @@ class AdminController extends BaseAdminController
         $roleData = Arr::except($data, ['exit', 'permissions']);
         $permissions = isset($data['permissions']) ? $data['permissions'] : [];
         $role->syncPermissions($permissions);
-        $this->repository->update($role->id, $roleData);
+        ::update($role->id, $roleData);
         $role->forgetCachedPermissions();
 
         return $this->redirect($request, $role);

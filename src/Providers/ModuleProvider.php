@@ -5,7 +5,6 @@ namespace TypiCMS\Modules\Roles\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Roles\Facades\Roles;
-use TypiCMS\Modules\Roles\Repositories\EloquentRole;
 
 class ModuleProvider extends ServiceProvider
 {
@@ -45,6 +44,6 @@ class ModuleProvider extends ServiceProvider
          */
         $app->register(\TypiCMS\Modules\Roles\Providers\RouteServiceProvider::class);
 
-        $app->bind('Roles', EloquentRole::class);
+        $app->bind('Roles', Role::class);
     }
 }
