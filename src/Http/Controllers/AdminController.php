@@ -18,7 +18,7 @@ class AdminController extends BaseAdminController
 
     public function create(): View
     {
-        $model = new Role;
+        $model = new Role();
         $model->permissions = [];
 
         return view('roles::admin.create')
