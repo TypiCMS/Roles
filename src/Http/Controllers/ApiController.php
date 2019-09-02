@@ -2,7 +2,9 @@
 
 namespace TypiCMS\Modules\Roles\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Filters\FilterOr;
@@ -11,7 +13,7 @@ use TypiCMS\Modules\Roles\Models\Role;
 
 class ApiController extends BaseApiController
 {
-    public function index(Request $request)
+    public function index(Request $request): LengthAwarePaginator
     {
         $data = QueryBuilder::for(Role::class)
             ->allowedFilters([
@@ -22,7 +24,7 @@ class ApiController extends BaseApiController
         return $data;
     }
 
-    public function destroy(Role $role)
+    public function destroy(Role $role): JsonResponse
     {
         $deleted = $role->delete();
 

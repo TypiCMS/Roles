@@ -2,43 +2,30 @@
 
 namespace TypiCMS\Modules\Roles\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
+use Illuminate\View\View;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Roles\Http\Requests\FormRequest;
 use TypiCMS\Modules\Roles\Models\Role;
 
 class AdminController extends BaseAdminController
 {
-    /**
-     * List models.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function index(): View
     {
         return view('roles::admin.index');
     }
 
-    /**
-     * Create form for a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function create(): View
     {
-        $model = new;
+        $model = new Role;
         $model->permissions = [];
 
         return view('roles::admin.create')
             ->with(compact('model'));
     }
 
-    /**
-     * Edit form for the specified resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function edit(Role $role, $child = null)
+    public function edit(Role $role, $child = null): View
     {
         $role->permissions = $role->permissions()->pluck('name')->all();
 
@@ -46,18 +33,11 @@ class AdminController extends BaseAdminController
             ->with(['model' => $role]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \TypiCMS\Modules\Roles\Http\Requests\FormRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(FormRequest $request)
+    public function store(FormRequest $request): RedirectResponse
     {
         $data = $request->all();
         $roleData = Arr::except($data, ['exit', 'permissions']);
-        $role = ::create($roleData);
+        $role = Role::create($roleData);
 
         if ($role) {
             $permissions = isset($data['permissions']) ? $data['permissions'] : [];
@@ -67,21 +47,13 @@ class AdminController extends BaseAdminController
         return $this->redirect($request, $role);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \TypiCMS\Modules\Roles\Models\Role               $role
-     * @param \TypiCMS\Modules\Roles\Http\Requests\FormRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Role $role, FormRequest $request)
+    public function update(Role $role, FormRequest $request): RedirectResponse
     {
         $data = $request->all();
         $roleData = Arr::except($data, ['exit', 'permissions']);
         $permissions = isset($data['permissions']) ? $data['permissions'] : [];
         $role->syncPermissions($permissions);
-        ::update($role->id, $roleData);
+        $role->update($roleData);
         $role->forgetCachedPermissions();
 
         return $this->redirect($request, $role);
