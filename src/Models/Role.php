@@ -34,16 +34,9 @@ class Role extends Base implements RoleContract
         $this->setTable(config('permission.table_names.roles'));
     }
 
-    /**
-     * Get front office uri.
-     *
-     * @param string $locale
-     *
-     * @return string
-     */
-    public function uri($locale = null)
+    public function uri($locale = null): string
     {
-        return '/';
+        return url('/');
     }
 
     public static function create(array $attributes = [])
@@ -57,9 +50,6 @@ class Role extends Base implements RoleContract
         return static::query()->create($attributes);
     }
 
-    /**
-     * A role may be given various permissions.
-     */
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -68,16 +58,6 @@ class Role extends Base implements RoleContract
         );
     }
 
-    /**
-     * Find a role by its name and guard name.
-     *
-     * @param string      $name
-     * @param string|null $guardName
-     *
-     * @throws \Spatie\Permission\Exceptions\RoleDoesNotExist
-     *
-     * @return \Spatie\Permission\Contracts\Role|\Spatie\Permission\Models\Role
-     */
     public static function findByName(string $name, $guardName = null): RoleContract
     {
         $guardName = $guardName ?? config('auth.defaults.guard');
@@ -91,15 +71,6 @@ class Role extends Base implements RoleContract
         return $role;
     }
 
-    /**
-     * Determine if the user may perform the given permission.
-     *
-     * @param string|Permission $permission
-     *
-     * @throws \Spatie\Permission\Exceptions\GuardMismatch
-     *
-     * @return bool
-     */
     public function hasPermissionTo($permission): bool
     {
         if (is_string($permission)) {
@@ -113,13 +84,6 @@ class Role extends Base implements RoleContract
         return $this->permissions->contains('id', $permission->id);
     }
 
-    /**
-     * Sync permissions.
-     *
-     * @param array $permissions
-     *
-     * @return null
-     */
     public function syncPermissions($permissions)
     {
         $permissionIds = [];
@@ -142,14 +106,6 @@ class Role extends Base implements RoleContract
         return $role;
     }
 
-    /**
-     * Find or create role by its name (and optionally guardName).
-     *
-     * @param string      $name
-     * @param string|null $guardName
-     *
-     * @return \Spatie\Permission\Contracts\Role
-     */
     public static function findOrCreate(string $name, $guardName = null): RoleContract
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
