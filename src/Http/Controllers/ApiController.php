@@ -18,7 +18,7 @@ class ApiController extends BaseApiController
         $data = QueryBuilder::for(Role::class)
             ->allowedSorts(['name'])
             ->allowedFilters([
-                AllowedFilter::custom('name', new FilterOr),
+                AllowedFilter::custom('name', new FilterOr()),
             ])
             ->paginate($request->input('per_page'));
 
