@@ -3,8 +3,8 @@
 namespace TypiCMS\Modules\Roles\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\View\View;
+use Spatie\Permission\Contracts\Permission;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Roles\Http\Requests\FormRequest;
 use TypiCMS\Modules\Roles\Models\Role;
@@ -35,27 +35,34 @@ class AdminController extends BaseAdminController
 
     public function store(FormRequest $request): RedirectResponse
     {
-        $data = $request->all();
-        $roleData = Arr::except($data, ['exit', 'permissions']);
-        $role = Role::create($roleData);
+        $permissions = $request->input('permissions', []);
+        $data = $request->except(['exit', 'permissions']);
 
-        if ($role) {
-            $permissions = isset($data['permissions']) ? $data['permissions'] : [];
-            $role->syncPermissions($permissions);
-        }
+        $this->storeNewPermissions($permissions);
+
+        $role = Role::create($data);
+        $role->syncPermissions($permissions);
 
         return $this->redirect($request, $role);
     }
 
     public function update(Role $role, FormRequest $request): RedirectResponse
     {
-        $data = $request->all();
-        $roleData = Arr::except($data, ['exit', 'permissions']);
-        $permissions = isset($data['permissions']) ? $data['permissions'] : [];
+        $permissions = $request->input('permissions', []);
+        $data = $request->except(['exit', 'permissions']);
+        $role->update($data);
+
+        $this->storeNewPermissions($permissions);
         $role->syncPermissions($permissions);
-        $role->update($roleData);
         $role->forgetCachedPermissions();
 
         return $this->redirect($request, $role);
+    }
+
+    private function storeNewPermissions($permissions)
+    {
+        foreach ($permissions as $name) {
+            app(Permission::class)->firstOrCreate(['name' => $name])->id;
+        }
     }
 }
