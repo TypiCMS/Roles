@@ -2,6 +2,6 @@
 
 return [
     'sidebar' => [
-        'weight' => 101,
+        'weight' => 150,
     ],
 ];
