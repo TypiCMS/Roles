@@ -1,5 +1,3 @@
-{!! BootForm::hidden('id') !!}
-
 @component('core::admin._buttons-form', ['model' => $model])
 @endcomponent
 
