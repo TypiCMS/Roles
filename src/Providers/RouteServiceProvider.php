@@ -27,11 +27,11 @@ class RouteServiceProvider extends ServiceProvider
              * Admin routes
              */
             $router->middleware('admin')->prefix('admin')->group(function (Router $router) {
-                $router->get('roles', 'AdminController@index')->name('admin::index-roles')->middleware('can:see-all-roles');
-                $router->get('roles/create', 'AdminController@create')->name('admin::create-role')->middleware('can:create-role');
-                $router->get('roles/{role}/edit', 'AdminController@edit')->name('admin::edit-role')->middleware('can:update-role');
-                $router->post('roles', 'AdminController@store')->name('admin::store-role')->middleware('can:create-role');
-                $router->put('roles/{role}', 'AdminController@update')->name('admin::update-role')->middleware('can:update-role');
+                $router->get('roles', 'AdminController@index')->name('admin::index-roles')->middleware('can:read roles');
+                $router->get('roles/create', 'AdminController@create')->name('admin::create-role')->middleware('can:create roles');
+                $router->get('roles/{role}/edit', 'AdminController@edit')->name('admin::edit-role')->middleware('can:update roles');
+                $router->post('roles', 'AdminController@store')->name('admin::store-role')->middleware('can:create roles');
+                $router->put('roles/{role}', 'AdminController@update')->name('admin::update-role')->middleware('can:update roles');
             });
 
             /*
@@ -39,9 +39,9 @@ class RouteServiceProvider extends ServiceProvider
              */
             $router->middleware('api')->prefix('api')->group(function (Router $router) {
                 $router->middleware('auth:api')->group(function (Router $router) {
-                    $router->get('roles', 'ApiController@index')->middleware('can:see-all-roles');
-                    $router->patch('roles/{role}', 'ApiController@updatePartial')->middleware('can:update-role');
-                    $router->delete('roles/{role}', 'ApiController@destroy')->middleware('can:delete-role');
+                    $router->get('roles', 'ApiController@index')->middleware('can:read roles');
+                    $router->patch('roles/{role}', 'ApiController@updatePartial')->middleware('can:update roles');
+                    $router->delete('roles/{role}', 'ApiController@destroy')->middleware('can:delete roles');
                 });
             });
         });

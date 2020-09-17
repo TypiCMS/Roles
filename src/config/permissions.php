@@ -2,9 +2,9 @@
 
 return [
     'roles' => [
-        'see-all-roles' => 'View list',
-        'create-role' => 'Create',
-        'update-role' => 'Edit',
-        'delete-role' => 'Delete',
+        'read roles' => 'Read',
+        'create roles' => 'Create',
+        'update roles' => 'Edit',
+        'delete roles' => 'Delete',
     ],
 ];
