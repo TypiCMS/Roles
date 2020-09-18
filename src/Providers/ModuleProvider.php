@@ -17,7 +17,10 @@ class ModuleProvider extends ServiceProvider
         $this->app['config']->set('typicms.modules', array_merge(['roles' => []], $modules));
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'roles');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        $this->publishes([
+            __DIR__.'/../database/migrations/create_roles_table.php.stub' => getMigrationFileName('create_roles_table'),
+        ], 'migrations');
 
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/roles'),
