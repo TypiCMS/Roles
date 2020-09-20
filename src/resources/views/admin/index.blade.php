@@ -10,6 +10,7 @@
     fields="id,name"
     table="roles"
     title="roles"
+    :multilingual="false"
     :publishable="false"
     :searchable="['name']"
     :sorting="['name']">
