@@ -15,28 +15,24 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        Route::namespace($this->namespace)->group(function (Router $router) {
-            /*
-             * Admin routes
-             */
-            $router->middleware('admin')->prefix('admin')->group(function (Router $router) {
-                $router->get('roles', [AdminController::class, 'index'])->name('admin::index-roles')->middleware('can:read roles');
-                $router->get('roles/create', [AdminController::class, 'create'])->name('admin::create-role')->middleware('can:create roles');
-                $router->get('roles/{role}/edit', [AdminController::class, 'edit'])->name('admin::edit-role')->middleware('can:read roles');
-                $router->post('roles', [AdminController::class, 'store'])->name('admin::store-role')->middleware('can:create roles');
-                $router->put('roles/{role}', [AdminController::class, 'update'])->name('admin::update-role')->middleware('can:update roles');
-            });
+        /*
+         * Admin routes
+         */
+        Route::middleware('admin')->prefix('admin')->name('admin::')->group(function (Router $router) {
+            $router->get('roles', [AdminController::class, 'index'])->name('index-roles')->middleware('can:read roles');
+            $router->get('roles/create', [AdminController::class, 'create'])->name('create-role')->middleware('can:create roles');
+            $router->get('roles/{role}/edit', [AdminController::class, 'edit'])->name('edit-role')->middleware('can:read roles');
+            $router->post('roles', [AdminController::class, 'store'])->name('store-role')->middleware('can:create roles');
+            $router->put('roles/{role}', [AdminController::class, 'update'])->name('update-role')->middleware('can:update roles');
+        });
 
-            /*
-             * API routes
-             */
-            $router->middleware('api')->prefix('api')->group(function (Router $router) {
-                $router->middleware('auth:api')->group(function (Router $router) {
-                    $router->get('roles', [ApiController::class, 'index'])->middleware('can:read roles');
-                    $router->patch('roles/{role}', [ApiController::class, 'updatePartial'])->middleware('can:update roles');
-                    $router->delete('roles/{role}', [ApiController::class, 'destroy'])->middleware('can:delete roles');
-                });
-            });
+        /*
+         * API routes
+         */
+        Route::middleware(['api', 'auth:api'])->prefix('api')->group(function (Router $router) {
+            $router->get('roles', [ApiController::class, 'index'])->middleware('can:read roles');
+            $router->patch('roles/{role}', [ApiController::class, 'updatePartial'])->middleware('can:update roles');
+            $router->delete('roles/{role}', [ApiController::class, 'destroy'])->middleware('can:delete roles');
         });
     }
 }
