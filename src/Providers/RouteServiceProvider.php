@@ -22,7 +22,7 @@ class RouteServiceProvider extends ServiceProvider
             $router->middleware('admin')->prefix('admin')->group(function (Router $router) {
                 $router->get('roles', [AdminController::class, 'index'])->name('admin::index-roles')->middleware('can:read roles');
                 $router->get('roles/create', [AdminController::class, 'create'])->name('admin::create-role')->middleware('can:create roles');
-                $router->get('roles/{role}/edit', [AdminController::class, 'edit'])->name('admin::edit-role')->middleware('can:update roles');
+                $router->get('roles/{role}/edit', [AdminController::class, 'edit'])->name('admin::edit-role')->middleware('can:read roles');
                 $router->post('roles', [AdminController::class, 'store'])->name('admin::store-role')->middleware('can:create roles');
                 $router->put('roles/{role}', [AdminController::class, 'update'])->name('admin::update-role')->middleware('can:update roles');
             });
