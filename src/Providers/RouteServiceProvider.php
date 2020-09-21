@@ -10,9 +10,6 @@ use TypiCMS\Modules\Roles\Http\Controllers\ApiController;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * Define the routes for the application.
-     */
     public function map()
     {
         /*
