@@ -19,7 +19,7 @@ class SidebarViewComposer
             $group->weight = 50;
             $group->addItem(__('Roles'), function (SidebarItem $item) {
                 $item->id = 'roles';
-                $item->icon = config('typicms.roles.sidebar.icon', 'icon fa fa-fw fa-users');
+                $item->icon = config('typicms.roles.sidebar.icon');
                 $item->weight = config('typicms.roles.sidebar.weight');
                 $item->route('admin::index-roles');
                 $item->append('admin::create-role');
