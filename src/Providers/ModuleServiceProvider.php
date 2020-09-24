@@ -27,9 +27,9 @@ class ModuleServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->publishes([
-            __DIR__.'/../database/seeds/RoleSeeder.php' => database_path('seeds/RoleSeeder.php'),
-            __DIR__.'/../database/seeds/PermissionSeeder.php' => database_path('seeds/PermissionSeeder.php'),
-            __DIR__.'/../database/seeds/PermissionRoleSeeder.php' => database_path('seeds/PermissionRoleSeeder.php'),
+            __DIR__.'/../database/seeders/RoleSeeder.php' => database_path('seeders/RoleSeeder.php'),
+            __DIR__.'/../database/seeders/PermissionSeeder.php' => database_path('seeders/PermissionSeeder.php'),
+            __DIR__.'/../database/seeders/PermissionRoleSeeder.php' => database_path('seeders/PermissionRoleSeeder.php'),
         ], 'seeders');
 
         AliasLoader::getInstance()->alias('Roles', Roles::class);
