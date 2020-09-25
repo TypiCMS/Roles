@@ -27,6 +27,10 @@ class PermissionSeeder extends Seeder
             ['id' => 15, 'name' => 'create files', 'guard_name' => 'web'],
             ['id' => 16, 'name' => 'update files', 'guard_name' => 'web'],
             ['id' => 17, 'name' => 'delete files', 'guard_name' => 'web'],
+            ['id' => 18, 'name' => 'read page_sections', 'guard_name' => 'web'],
+            ['id' => 19, 'name' => 'create page_sections', 'guard_name' => 'web'],
+            ['id' => 20, 'name' => 'update page_sections', 'guard_name' => 'web'],
+            ['id' => 21, 'name' => 'delete page_sections', 'guard_name' => 'web'],
             ['id' => 22, 'name' => 'read menus', 'guard_name' => 'web'],
             ['id' => 23, 'name' => 'create menus', 'guard_name' => 'web'],
             ['id' => 24, 'name' => 'update menus', 'guard_name' => 'web'],
@@ -47,6 +51,14 @@ class PermissionSeeder extends Seeder
             ['id' => 39, 'name' => 'create users', 'guard_name' => 'web'],
             ['id' => 40, 'name' => 'update users', 'guard_name' => 'web'],
             ['id' => 41, 'name' => 'delete users', 'guard_name' => 'web'],
+            ['id' => 42, 'name' => 'read tags', 'guard_name' => 'web'],
+            ['id' => 43, 'name' => 'create tags', 'guard_name' => 'web'],
+            ['id' => 44, 'name' => 'update tags', 'guard_name' => 'web'],
+            ['id' => 45, 'name' => 'delete tags', 'guard_name' => 'web'],
+            ['id' => 46, 'name' => 'read menulinks', 'guard_name' => 'web'],
+            ['id' => 47, 'name' => 'create menulinks', 'guard_name' => 'web'],
+            ['id' => 48, 'name' => 'update menulinks', 'guard_name' => 'web'],
+            ['id' => 49, 'name' => 'delete menulinks', 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($typi_permissions);
