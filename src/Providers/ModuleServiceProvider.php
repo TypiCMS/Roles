@@ -19,10 +19,6 @@ class ModuleServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'roles');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/create_roles_table.php.stub' => getMigrationFileName('create_roles_table'),
-        ], 'migrations');
-
-        $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/roles'),
         ], 'views');
 
