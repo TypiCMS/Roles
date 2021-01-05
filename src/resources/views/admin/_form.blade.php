@@ -9,5 +9,5 @@
     </div>
 </div>
 
-<label>@lang('Role permissions')</label>
+<label class="form-label">@lang('Role permissions')</label>
 @include('core::admin._permissions-form')
