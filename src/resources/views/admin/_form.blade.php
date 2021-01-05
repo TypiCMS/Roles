@@ -3,7 +3,7 @@
 @component('core::admin._buttons-form', ['model' => $model])
 @endcomponent
 
-<div class="form-row">
+<div class="row gx-3">
     <div class="col-sm-6">
         {!! BootForm::text(__('Name'), 'name')->required() !!}
     </div>
