@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Exceptions\GuardDoesNotMatch;
+use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Guard;
 use Spatie\Permission\Traits\HasPermissions;
@@ -61,7 +62,7 @@ class Role extends Base implements RoleContract
     /**
      * A role belongs to some users of the model associated with its guard.
      */
-    public function users(): MorphToMany
+    public function users(): BelongsToMany
     {
         return $this->morphedByMany(
             getModelForGuard($this->attributes['guard_name']),
@@ -75,7 +76,7 @@ class Role extends Base implements RoleContract
     /**
      * Find a role by its name and guard name.
      *
-     * @param string|null $guardName
+     * @param null|string $guardName
      *
      * @throws \Spatie\Permission\Exceptions\RoleDoesNotExist
      *
@@ -110,7 +111,7 @@ class Role extends Base implements RoleContract
     /**
      * Find or create role by its name (and optionally guardName).
      *
-     * @param string|null $guardName
+     * @param null|string $guardName
      */
     public static function findOrCreate(string $name, $guardName = null): RoleContract
     {
@@ -128,7 +129,7 @@ class Role extends Base implements RoleContract
     /**
      * Determine if the user may perform the given permission.
      *
-     * @param string|Permission $permission
+     * @param Permission|string $permission
      *
      * @throws \Spatie\Permission\Exceptions\GuardDoesNotMatch
      */
@@ -153,6 +154,32 @@ class Role extends Base implements RoleContract
         }
 
         return $this->permissions->contains('id', $permission->id);
+    }
+
+    /**
+     * Fill model from array.
+     */
+    protected function fillModelFromArray(array $attributes)
+    {
+        $this->attributes = $attributes;
+        if (isset($attributes['id'])) {
+            $this->exists = true;
+            $this->original['id'] = $attributes['id'];
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get model from array.
+     *
+     * @return \Spatie\Permission\Contracts\Role
+     */
+    public static function getModelFromArray(array $attributes): ?RoleContract
+    {
+        $roles = new static();
+
+        return $roles->fillModelFromArray($attributes);
     }
 
     public function uri($locale = null): string
