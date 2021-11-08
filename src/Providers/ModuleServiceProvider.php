@@ -5,6 +5,7 @@ namespace TypiCMS\Modules\Roles\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Roles\Facades\Roles;
+use TypiCMS\Modules\Roles\Models\Role;
 
 class ModuleServiceProvider extends ServiceProvider
 {
