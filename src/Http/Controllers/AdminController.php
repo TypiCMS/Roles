@@ -4,7 +4,7 @@ namespace TypiCMS\Modules\Roles\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Models\Permission;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Roles\Http\Requests\FormRequest;
 use TypiCMS\Modules\Roles\Models\Role;
@@ -62,7 +62,7 @@ class AdminController extends BaseAdminController
     private function storeNewPermissions($permissions)
     {
         foreach ($permissions as $name) {
-            app(Permission::class)->firstOrCreate(['name' => $name])->id;
+            Permission::firstOrCreate(['name' => $name]);
         }
     }
 }

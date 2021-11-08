@@ -129,7 +129,7 @@ class Role extends Base implements RoleContract
     /**
      * Determine if the user may perform the given permission.
      *
-     * @param Permission|string $permission
+     * @param mixed $permission
      *
      * @throws \Spatie\Permission\Exceptions\GuardDoesNotMatch
      */
